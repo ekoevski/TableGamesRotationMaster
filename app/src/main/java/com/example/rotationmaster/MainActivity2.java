@@ -1,8 +1,6 @@
 package com.example.rotationmaster;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,27 +8,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Must be done first, set content view
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-
-        // Declare your objects
-        Button myAddDealerButton = findViewById(R.id.addDealerButton);
-        Button myAddTableButton = findViewById(R.id.addTableButton);
-
-        // Listener functions
-        myAddDealerButton.setOnClickListener(v -> {
-            Intent addDealerActivityIntent = new Intent(MainActivity.this, MainActivity2.class);
-            startActivity(addDealerActivityIntent);
-        });
-
-        // Handle System Bars
+        setContentView(R.layout.activity_main2);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
