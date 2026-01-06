@@ -68,6 +68,7 @@ public class MainActivity2 extends AppCompatActivity {
         emp.endTime = etEndTime.getText().toString().trim();
         
 
+        
         // 2. Basic Validation
         if (emp.name.isEmpty()) {
             Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
