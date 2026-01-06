@@ -1,8 +1,10 @@
 package com.example.rotationmaster;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,12 +22,15 @@ public class MainActivity2 extends AppCompatActivity {
     private TextInputEditText etEndTime;
     private TextInputEditText etEndDate;
 
+    private ListView dealerListView;
     private Button btnAdd;
     private EmployeeRepository repo;
+    private static final String CURSOR_QUERY = "SELECT * FROM employees";
 
     // Main Activity onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main2);
@@ -44,7 +49,13 @@ public class MainActivity2 extends AppCompatActivity {
         etEndDate = findViewById(R.id.textInputEditText2);
         btnAdd = findViewById(R.id.button);
 
+
+        // Create Database
         repo = new EmployeeRepository(this);
+
+        // Create List view to see list of all dealers
+        dealerListView = findViewById(R.id.dealerListView);
+        dealerListView.setAdapter(repo.pullMyDealersFromDb(this));
 
         // We are creating a view
         View.OnClickListener addListener = new View.OnClickListener() {
@@ -55,8 +66,6 @@ public class MainActivity2 extends AppCompatActivity {
         };
         btnAdd.setOnClickListener(addListener);
     }
-
-
     // Functions
     private void handleAddButton() {
         // 1. Grab values from the inputs and put into employee struct
@@ -66,12 +75,10 @@ public class MainActivity2 extends AppCompatActivity {
         emp.startTime = etStartTime.getText().toString().trim();
         emp.endDate = etEndDate.getText().toString().trim();
         emp.endTime = etEndTime.getText().toString().trim();
-        
 
-        
         // 2. Basic Validation
-        if (emp.name.isEmpty()) {
-            Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
+        if (emp.name.isEmpty() || emp.startDate.isEmpty() || emp.startTime.isEmpty() || emp.endDate.isEmpty() || emp.endTime.isEmpty()) {
+            Toast.makeText(this, "Cannot have empty fields", Toast.LENGTH_SHORT).show();
             return;
         }
         // 3. Insert in db
